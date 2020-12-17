@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  hyper-rocket:
+    container_name: hyper-rocket
+    build:
+      context: ../
+      dockerfile: ./workspace/Dockerfile
+    ports:
+      - 8080:80
+      - 8888:8888
+      - 9000:9000
+      - 3000:3000
+      - 25:22
+    restart: unless-stopped
+    tty: true
+    working_dir: /hyper-rocket
+    volumes:
+      - ../app:/hyper-rocket
+      - $HOME/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
+

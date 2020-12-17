@@ -1,0 +1,67 @@
+type: laravel
+
+info:
+  label: 'Laravel範例佈署'
+
+source:
+  fetchType: git
+  repo: ''
+  folder: backend
+  beforeFetchHook: ./hooks/beforeFetch.js
+  revision: master
+
+build:
+  distDir: .
+  beforeBuildHook: ./hooks/beforeBuild.js
+  env:
+    APP_NAME: LARAVEL-PROJECT-DEMO
+    FOO: BAR
+
+queue:
+  enabled: true
+  workerDir: queue
+  workers:
+    - filename: queue.yml
+      variable:
+        name: laravel
+        queueName: default
+        cwd: /site/laravel
+        tries: 5
+        sleep: 5
+        timeout: 180
+
+rsync:
+  afterRsyncServerCommands:
+    - script: ls -l
+      remoteCwd: /etc/cron.d
+    - script: du -sh vendor
+      remoteCwd: /site/laravel
+    - script: service nginx restart
+    - script: service php7.1-fpm restart
+  removeRemoteVendorBeforeRsync: true
+  path: /site/laravel
+  meta:
+    - path: ./metaFiles
+      to: /site/laravel-meta-files
+
+servers:
+  - host: remote.host
+    user: user
+    label: remote
+
+cron:
+  enable: false
+  name: laravel
+  user: site
+  comment: Laravel佈署CronJob範例
+  rules:
+    - 0 5 * * * /sbin/shutdown -r now
+    - 0 7 * * * service php7.1-fpm restart
+
+ci:
+  enable: false
+  slack: true
+  lineNotify: true
+  mail:
+    - target1@gmail.com
+    - target2@gmail.com

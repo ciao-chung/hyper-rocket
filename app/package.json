@@ -1,0 +1,97 @@
+{
+  "name": "hyper-rocket",
+  "description": "Hyper CLI",
+  "version": "1.0.20",
+  "author": "Ciao Chung @ciao-chung",
+  "bin": {
+    "hyper-rocket": "./bin/run"
+  },
+  "dependencies": {
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/plugin-help": "^3",
+    "axios": "^0.21.0",
+    "cli-ux": "^5.5.1",
+    "inquirer": "^7.3.3",
+    "js-yaml": "^3.14.1",
+    "lodash": "^4.17.20",
+    "module-alias": "^2.2.2",
+    "moment": "^2.29.1",
+    "mustache": "2.3.2",
+    "node-notifier": "^9.0.0",
+    "nodemailer": "^6.4.17",
+    "prettyjson": "^1.2.1",
+    "qs": "^6.9.4",
+    "shelljs": "^0.8.4"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@oclif/test": "^1",
+    "chai": "^4",
+    "globby": "^10",
+    "mocha": "^5",
+    "nyc": "^14"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json",
+    "/src"
+  ],
+  "keywords": [
+    "Hyper CLI"
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "oclif": {
+    "commands": "./src/commands",
+    "bin": "hyper-rocket",
+    "plugins": [
+      "@oclif/plugin-help"
+    ],
+    "hooks": {
+      "init": "./src/hooks/init/init"
+    },
+    "topics": {
+      "ci": {
+        "description": "CI(Continue Integration)設定"
+      },
+      "deploy": {
+        "description": "佈署"
+      },
+      "fish": {
+        "description": "Fish Shell安裝、設定"
+      },
+      "user": {
+        "description": "Linux使用者帳號操作"
+      },
+      "rsync": {
+        "description": "使用rsync在遠端跟本機之前傳送檔案"
+      },
+      "certbot": {
+        "description": "Certbot(Let's encrypt操作工具)"
+      },
+      "nginx": {
+        "description": "Reverse proxy server"
+      },
+      "php": {
+        "description": "PHP相關環境建立、設定、資訊查詢"
+      },
+      "phpfpm": {
+        "description": "PHP-FPM相關設定、資訊查詢"
+      },
+      "mysql": {
+        "description": "MySQL相關環境建立、設定、資訊查詢"
+      }
+    }
+  },
+  "scripts": {
+    "build": "npm run prepack; cp ../README.md ./README.md",
+    "prepack": "oclif-dev manifest && oclif-dev readme",
+    "test": "nyc mocha --forbid-only \"test/**/*.test.js\"",
+    "version": "oclif-dev readme && git add README.md"
+  }
+}

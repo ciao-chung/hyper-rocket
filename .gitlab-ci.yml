@@ -1,0 +1,19 @@
+image: ciaochung/ci-nodejs-php:statable
+
+cache:
+  paths:
+    - node_modules
+stages:
+  - test
+
+test:
+  stage: test
+  # (git tag含有 test) OR (commit含有"test")的時候執行
+  only:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /test/
+      - $CI_COMMIT_TAG =~ /^test.*$/
+  script:
+    - yarn
+    - yarn test
+    - yarn prepack

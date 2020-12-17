@@ -1,0 +1,9 @@
+.*.swp
+.git
+*-debug.log
+*-error.log
+/.nyc_output
+npm-debug.log*
+nyc_output/
+yarn-debug.log*
+yarn-error.log*

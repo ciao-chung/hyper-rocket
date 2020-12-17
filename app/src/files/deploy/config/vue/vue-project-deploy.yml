@@ -1,0 +1,59 @@
+type: vue
+
+info:
+  label: 'VeuJS範例佈署'
+
+source:
+  fetchType: git
+  repo: ''
+  folder: frontend
+  beforeFetchHook: ./hooks/beforeFetch.js
+  revision: master
+
+build:
+  apibase: https://api.service.com/api
+  distDir: dist
+  env:
+    preconnect:
+      - https://storage.googleapis.com
+  beforeBuildHook: ./hooks/beforeBuild.js
+  beforeBuildCommands:
+    - yarn install
+  buildScript: yarn build
+  afterBuildCommand:
+    - echo "" > robot.txt
+
+rsync:
+  afterRsyncServerCommands:
+    - script: pwd
+    - script: ls -l
+      remoteCwd: /etc/cron.d
+    - script: service nginx restart
+    - script: service php7.4-fpm restart
+  removeRemoteBeforeRsync: true
+  path: /site/vue
+  meta:
+    - path: ./metaFiles
+      to: /site/vue-meta-files
+
+servers:
+  - host: remote.host
+    user: user
+    label: remote
+
+cron:
+  enable: false
+  name: vue
+  user: site
+  comment: VueJs佈署CronJob範例
+  rules:
+    - 0 5 * * * /sbin/shutdown -r now
+    - 0 7 * * * service php7.4-fpm restart
+
+ci:
+  enable: false
+  slack: true
+  lineNotify: true
+  mail:
+    - target1@gmail.com
+    - target2@gmail.com

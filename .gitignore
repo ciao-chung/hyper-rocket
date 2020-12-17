@@ -1,0 +1,17 @@
+*-debug.log
+*-error.log
+.idea
+.nyc_output
+.notifier
+/dist
+/package-lock.json
+/tmp
+node_modules
+node_modules/
+npm-debug.log*
+nyc_output/
+yarn-debug.log*
+yarn-error.log*
+.editorconfig
+app/deploy-workdir/*
+!app/deploy-workdir/.gitkeep

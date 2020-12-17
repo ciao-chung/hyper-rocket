@@ -1,0 +1,21 @@
+type: default
+
+info:
+  label: '自訂範例佈署'
+
+source:
+  fetchType: zip
+  url: https://ciao-chung.github.io/simple-site/site.zip
+  folder: simple-site-master
+
+build:
+  distDir: .
+
+rsync:
+  removeRemoteBeforeRsync: true
+  path: /site/simple
+
+servers:
+  - host: remote.host
+    user: user
+    label: remote
