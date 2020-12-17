@@ -1,7 +1,7 @@
 {
   "name": "hyper-rocket",
   "description": "Hyper CLI",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "author": "Ciao Chung @ciao-chung",
   "bin": {
     "hyper-rocket": "./bin/run"
@@ -12,6 +12,7 @@
     "@oclif/plugin-help": "^3",
     "axios": "^0.21.0",
     "cli-ux": "^5.5.1",
+    "clipboardy": "^2.3.0",
     "inquirer": "^7.3.3",
     "js-yaml": "^3.14.1",
     "lodash": "^4.17.20",
