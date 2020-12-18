@@ -10,6 +10,10 @@ class Host extends Command {
     this.commandFlags = flags
     await this.readConfig()
 
+    if(this.commandFlags.open) {
+      await this.open()
+    }
+
     if(!this.hostname) {
       await this.choiceHost()
     }
@@ -43,6 +47,20 @@ class Host extends Command {
     ])
 
     this.hostname = hostname
+  }
+
+  async open() {
+    const profilePath = hostConfigService.getBaseProfileDirectory()
+    const configFilePath = hostConfigService.getHostConfigFilePath()
+    if(this.commandFlags.open === 'xdg') {
+      await execAsync(`xdg-open ${profilePath}`)
+    }
+
+    else {
+      await execAsync(`${this.commandFlags.open} ${configFilePath}`)
+    }
+
+    process.exit()
   }
 
   async readConfig() {
@@ -106,6 +124,18 @@ Host.description = `快速登入遠端主機
 不需記任何主機資訊
 透過命名遠端主機
 將在主機設定檔將存在 ${chalk.hex(COLOR.ORANGE_HEX).bold('~/.hyper-rocket/host.yml')} 中
+
+${chalk.hex(COLOR.TEAL_HEX).bold(`
+設定檔請使用以下格式
+hosts:
+  - name: Server 1
+    description: 測試機
+    user: site
+    host: foo.com.tw
+  - name: Server 2
+    user: site
+    host: bar.com.tw
+`)}
 `
 
 Host.args = [{
@@ -115,14 +145,20 @@ Host.args = [{
 }]
 
 Host.flags = {
-  // name: flags.string({
-  //   char: 'n',
-  //   description: '自訂的主機名稱',
-  //   default: '',
-  // }),
   list: flags.boolean({
     char: 'l',
     description: '列出所有主機資訊',
+  }),
+  open: flags.string({
+    char: 'o',
+    description: `開啟設定檔(~/.hyper-rocket/host.yml)
+選項說明
+- xdg: 檔案管理器
+- kate: kate文字編輯器
+- phpstorm
+- code: vs code
+    `,
+    options: ['xdg', 'kate', 'phpstorm', 'code'],
   }),
 }
 
