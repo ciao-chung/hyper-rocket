@@ -39,7 +39,7 @@ class Host extends Command {
       {
         type: 'list',
         name: 'hostname',
-        message: '請選擇主機',
+        message: '請選擇主機(取消請按ctrl+c)',
         choices: options,
         loop: false,
         pageSize: 30,
