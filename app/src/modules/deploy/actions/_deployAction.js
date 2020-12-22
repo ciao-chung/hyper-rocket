@@ -43,6 +43,7 @@ class _deployAction {
       const commandObject = this._getCommandObject(command)
       await execAsync(commandObject.script, {
         cwd,
+        ignoreError: true,
       })
     }
   }
@@ -68,6 +69,7 @@ class _deployAction {
   }
 
   async _rsync(server) {
+    await execOnServer(server, `mkdir -p ${server.to}`)
     let script = `rsync -e "ssh -o StrictHostKeyChecking=no" -avzh ${server.from}/ ${server.user}@${server.host}:${server.to}`
     if(server.local) {
       script = `rsync -avzh ${server.from}/ ${server.to}`

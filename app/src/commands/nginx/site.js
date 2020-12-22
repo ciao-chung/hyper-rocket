@@ -40,6 +40,15 @@ class site extends Command {
 
     await execAsync(`sudo nginx -t`)
     await execAsync(`sudo service nginx restart`)
+
+    if(this.commandFlags.ssl === true) {
+      this.email = this.commandFlags.email
+      if(!this.email) {
+        logger(`缺少email參數無法使用certbot設定SSL憑證`, 'red')
+        return
+      }
+      await execAsync(`sudo certbot --nginx --redirect --keep-until-expiring --no-eff-email --agree-tos --email ${this.email} --domains ${this.commandFlags.domain}`)
+    }
   }
 }
 
@@ -63,6 +72,9 @@ site.flags = {
   domain: flags.string({
     required: true,
     description: '網域',
+  }),
+  email: flags.string({
+    description: 'Let\s encrypt email',
   }),
   path: flags.string({
     required: true,

@@ -241,6 +241,7 @@ class kernel {
   }
 
   async execOnServer(server, command, options = {}) {
+    options.removeSudo = global.removeRemoteSudo === true
     if(options.remoteCwd) {
       command = `cd ${options.remoteCwd}; ${command}`
     }
