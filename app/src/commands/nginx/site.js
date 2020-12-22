@@ -10,6 +10,7 @@ class site extends Command {
       phpVersion: this.phpVersion,
       port: this.commandFlags.port,
       path: this.commandFlags.path,
+      domain: this.commandFlags.domain,
     }
 
     let templatePath = null
