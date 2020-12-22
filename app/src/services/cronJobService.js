@@ -24,7 +24,7 @@ class cronJobService {
     logger(`正在設定CronJob檔案: ${this.cronJobFilePath}`, 'green')
     logger(this._getCronFileContent(), 'yellow')
     await execOnServer(this.server, `sudo rm -rf ${this.cronJobFilePath}`)
-    await execOnServer(this.server, `sudo echo '${this._getCronFileContent()}' > ${this.cronJobFilePath}`)
+    await execOnServer(this.server, `sudo bash -c 'echo "${this._getCronFileContent()}" > ${this.cronJobFilePath}'`)
     await execOnServer(this.server, `sudo chown ${this.user}:${this.user} ${this.cronJobFilePath}`)
     await execOnServer(this.server, `sudo chmod g-w ${this.cronJobFilePath}`)
     await execOnServer(this.server, `sudo service cron restart`)
