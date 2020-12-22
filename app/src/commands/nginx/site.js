@@ -6,29 +6,21 @@ class site extends Command {
     global.removeSudo = flags.removeSudo
     this.commandFlags = flags
     this.phpVersion = await getPhpVersion()
-    const templateData = {
+    this.templateData = {
       phpVersion: this.phpVersion,
       port: this.commandFlags.port,
       path: this.commandFlags.path,
       domain: this.commandFlags.domain,
     }
 
-    let templatePath = null
-    if(this.commandFlags.spa === true) {
-      if(this.commandFlags.ssl === true) templatePath = 'nginx/site-spa-ssl.conf'
-      if(this.commandFlags.ssl === false) templatePath = 'nginx/site-spa.conf'
-    }
+    // 先設定HTTP版本
+    let baseHttpNginxConfigTemplate = this._getBaseHttpNginxTemplate()
 
-    else {
-      if(this.commandFlags.ssl === true) templatePath = 'nginx/site-php-ssl.conf'
-      if(this.commandFlags.ssl === false) templatePath = 'nginx/site-php.conf'
-    }
-
-    if(!templatePath) {
+    if(!baseHttpNginxConfigTemplate) {
       logger(`找不到符合的nginx設定樣板`, 'yellow')
       return
     }
-    const nginxConf = global.renderService.render(templatePath, templateData)
+    const nginxConf = global.renderService.render(baseHttpNginxConfigTemplate, this.templateData)
 
     const configPath = `/etc/nginx/sites-available/${this.commandFlags.filename}`
     logger(`正在建立Nginx設定檔: ${configPath}`, 'blue')
@@ -39,6 +31,7 @@ class site extends Command {
       await execAsync(`sudo ln -s ${configPath} /etc/nginx/sites-enabled/${this.commandFlags.filename}`)
     }
 
+    // 有SSL的情況
     if(this.commandFlags.ssl === true) {
       this.email = this.commandFlags.email
       if(!this.email) {
@@ -46,10 +39,34 @@ class site extends Command {
         return
       }
       await execAsync(`sudo certbot --nginx --redirect --keep-until-expiring --no-eff-email --agree-tos --email ${this.email} --domains ${this.commandFlags.domain}`)
+      await this._createSslNginxConfig()
     }
 
     await execAsync(`sudo nginx -t`)
     await execAsync(`sudo service nginx restart`)
+  }
+
+  async _createSslNginxConfig() {
+    let nginxConfigTemplate = this._getSslNginxTemplate()
+
+    if(!nginxConfigTemplate) {
+      logger(`找不到符合的nginx設定樣板`, 'yellow')
+      return
+    }
+    const nginxConf = global.renderService.render(nginxConfigTemplate, this.templateData)
+    const configPath = `/etc/nginx/sites-available/${this.commandFlags.filename}`
+    logger(`正在建立Nginx設定檔: ${configPath}`, 'blue')
+    await writeFileAsRoot(configPath, nginxConf)
+  }
+
+  _getBaseHttpNginxTemplate() {
+    if(this.commandFlags.spa === true) return 'nginx/site-spa.conf'
+    return 'nginx/site-php.conf'
+  }
+
+  _getSslNginxTemplate() {
+    if(this.commandFlags.spa === true) return 'nginx/site-spa-ssl.conf'
+    return 'nginx/site-php-ssl.conf'
   }
 }
 
