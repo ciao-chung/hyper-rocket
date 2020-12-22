@@ -22,10 +22,6 @@ execute.flags = {
   workdirName: flags.string({
     description: '工作目錄名稱',
   }),
-  cleanWorkdir: flags.boolean({
-    description: '佈署完成後自動刪除工作目錄',
-    default: true,
-  }),
   skip: flags.string({
     description: `跳過佈署階段
 可跳過階段: fetch, build, publish, extra-service, cleanup, ci
@@ -33,14 +29,6 @@ execute.flags = {
     options: ['fetch', 'build', 'publish', 'extra-service', 'cleanup', 'ci'],
     multiple: true,
     default: [],
-  }),
-  rsync: flags.boolean({
-    description: '是否在build完成後執行rsync(預設為true)',
-    default: false,
-  }),
-  init: flags.boolean({
-    description: '標記為初始化佈署',
-    default: false,
   }),
   migrate: flags.boolean({
     description: 'Publish完成後自動執行Laravel Migrate(僅Laravel佈署才有效)',
