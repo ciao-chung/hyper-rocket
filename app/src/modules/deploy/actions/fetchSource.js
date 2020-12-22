@@ -16,9 +16,17 @@ class fetchSource extends _deployAction {
     this.fetchType = this._getFetchType()
     this._outputStage(`Fetch source(${this.fetchType})`)
     await this._callHook('source.beforeFetchHook')
+    await this._executeCommands(
+      DEPLOY_ENV.CONFIG.fetch.beforeFetchCommands,
+      DEPLOY_ENV.SOURCE_PATH
+    )
     await this._removeProjectPath()
     await this._fetch()
     await this._callHook('source.afterFetchHook')
+    await this._executeCommands(
+      DEPLOY_ENV.CONFIG.fetch.afterFetchCommands,
+      DEPLOY_ENV.SOURCE_PATH
+    )
     this._outputStage(`原始碼目錄Fetch完成: ${DEPLOY_ENV.SOURCE_PATH}`)
     notify(`原始碼目錄Fetch完成: ${DEPLOY_ENV.SOURCE_PATH}`)
   }

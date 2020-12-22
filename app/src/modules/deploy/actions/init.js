@@ -106,7 +106,6 @@ class init extends _deployAction {
     // 設定
     global.DEPLOY_ENV.DEPLOY_TYPE = this._getDeployType()
     global.DEPLOY_ENV.DEPLOY_LABEL = $helper.getRecursive(DEPLOY_ENV.CONFIG, 'info.label')
-    global.DEPLOY_ENV.SOURCE_PATH = resolve(DEPLOY_ENV.WORKDIR, 'source')
     const sourceFolder = global.DEPLOY_ENV.CONFIG.source.folder || '.'
     DEPLOY_ENV.PROJECT_PATH = resolve(DEPLOY_ENV.WORKDIR, 'project')
     DEPLOY_ENV.SOURCE_PATH = resolve(DEPLOY_ENV.WORKDIR, 'project', sourceFolder)

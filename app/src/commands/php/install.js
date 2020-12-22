@@ -82,9 +82,9 @@ class PhpInstallCommand extends Command {
       ignoreError: true,
     })
     await execAsync(`sudo apt-get remove --purge apache2 apache2-utils -y`)
-    await execAsync(`rm -rf /etc/apache2-origin-bak`)
-    await execAsync(`cp -r /etc/apache2 /etc/apache2-origin-bak`)
-    await execAsync(`rm -rf /etc/apache2`)
+    await execAsync(`sudo rm -rf /etc/apache2-origin-bak`)
+    await execAsync(`sudo cp -r /etc/apache2 /etc/apache2-origin-bak`)
+    await execAsync(`sudo rm -rf /etc/apache2`)
     await execAsync(`sudo service apache2 status`, {
       ignoreError: true,
     })

@@ -49,7 +49,9 @@ hyper-rocket deploy:execute -x \
 - revision(optional): String, fetchType設定為git的時候指定的git版本, 可使用commit branch等, 佈署指令將使用git checkout切換版本
 - folder(optional): String, 取得專案後的原始碼相對路徑, 預設為專案根目錄: .
 - beforeFetchHook(optional): String, 執行的fetch動作前的Hook
+- beforeFetchCommands(optional): Array, 執行的fetch動作前要執行的指令陣列(CommandArray), cwd為dist目錄
 - afterFetchHook(optional): String, 完成的fetch動作後的Hook
+- afterFetchCommands(optional): Array, 完成的fetch動作後要執行的指令陣列(CommandArray), cwd為dist目錄
 
 ### build
 

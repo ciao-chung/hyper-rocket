@@ -8,6 +8,7 @@ class remoteAccess extends Command {
     logger(`開始設定bind-address IP: ${args.address}`, 'cyan')
     await execAsync(`sudo sed -i "s/.*bind-address.*/bind-address = ${args.address}/" /etc/mysql/mysql.conf.d/mysqld.cnf`)
     await execAsync(`sudo cat /etc/mysql/mysql.conf.d/mysqld.cnf | grep bind-address`)
+    await execAsync(`sudo service mysql restart`)
   }
 }
 
