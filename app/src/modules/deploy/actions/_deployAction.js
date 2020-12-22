@@ -69,6 +69,11 @@ class _deployAction {
   }
 
   async _rsync(server) {
+    if(this._shouldSkip('rsync') === true) {
+      logger(`跳過Rsync階段`, 'yellow')
+      return
+    }
+
     await execOnServer(server, `mkdir -p ${server.to}`)
     let script = `rsync -e "ssh -o StrictHostKeyChecking=no" -avzh ${server.from}/ ${server.user}@${server.host}:${server.to}`
     if(server.local) {

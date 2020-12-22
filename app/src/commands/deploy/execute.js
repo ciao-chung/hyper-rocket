@@ -24,9 +24,9 @@ execute.flags = {
   }),
   skip: flags.string({
     description: `跳過佈署階段
-可跳過階段: fetch, build, publish, extra-service, cleanup, ci
+可跳過階段: fetch, build, publish, rsync, extra-service, cleanup, ci
     `,
-    options: ['fetch', 'build', 'publish', 'extra-service', 'cleanup', 'ci'],
+    options: ['fetch', 'build', 'publish', 'rsync', 'extra-service', 'cleanup', 'ci'],
     multiple: true,
     default: [],
   }),

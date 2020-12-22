@@ -7,7 +7,7 @@ class publishLaravelHandler extends _basePublishHandler{
 
   async _beforeRsync(serverIndex, server) {
     // remove remote dist directory
-    if(DEPLOY_ENV.CONFIG.rsync.removeRemoteVendorBeforeRsync === true) {
+    if(DEPLOY_ENV.CONFIG.rsync.removeRemoteVendorBeforeRsync === true && !this._shouldSkip('rsync')) {
       await execOnServer(server, `sudo rm -rf ${this.remoteLaravelPath}/vendor`, {
         ignoreError: true,
       })
