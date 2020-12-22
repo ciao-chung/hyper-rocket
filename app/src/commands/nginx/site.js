@@ -39,9 +39,6 @@ class site extends Command {
       await execAsync(`sudo ln -s ${configPath} /etc/nginx/sites-enabled/${this.commandFlags.filename}`)
     }
 
-    await execAsync(`sudo nginx -t`)
-    await execAsync(`sudo service nginx restart`)
-
     if(this.commandFlags.ssl === true) {
       this.email = this.commandFlags.email
       if(!this.email) {
@@ -50,6 +47,9 @@ class site extends Command {
       }
       await execAsync(`sudo certbot --nginx --redirect --keep-until-expiring --no-eff-email --agree-tos --email ${this.email} --domains ${this.commandFlags.domain}`)
     }
+
+    await execAsync(`sudo nginx -t`)
+    await execAsync(`sudo service nginx restart`)
   }
 }
 
