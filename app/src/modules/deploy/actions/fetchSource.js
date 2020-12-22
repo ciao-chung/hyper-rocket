@@ -71,7 +71,9 @@ class fetchSource extends _deployAction {
     this._outputStage(`正在建立原始碼目錄: ${DEPLOY_ENV.SOURCE_PATH}`)
     this._outputStage(`正在建立GIT版本資訊檔: ${DEPLOY_ENV.SOURCE_PATH}`)
     const gitInfo = `git log -1 --pretty="Hash: %H %nRefs: %d %nCommit: %BAuthor: %aN %nDate: %ai"`
-    await execAsync(`${gitInfo}`)
+    await execAsync(`${gitInfo}`, {
+      cwd: DEPLOY_ENV.PROJECT_PATH,
+    })
     await execAsync(`${gitInfo} > deploy.commit`, {
       cwd: DEPLOY_ENV.PROJECT_PATH,
     })
