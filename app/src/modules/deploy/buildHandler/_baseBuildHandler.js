@@ -23,7 +23,7 @@ class _baseBuildHandler extends _deployAction {
     await this._callHook('build.beforeBuildHook')
     this._outputStage(`Before Build Command`)
     await this._executeCommands(
-      DEPLOY_ENV.CONFIG.build.beforeBuildCommand,
+      DEPLOY_ENV.CONFIG.build.beforeBuildCommands,
       DEPLOY_ENV.SOURCE_PATH
     )
     this._outputStage(`Build ${DEPLOY_ENV.DEPLOY_LABEL}: ${DEPLOY_ENV.SOURCE_PATH}`)
@@ -35,7 +35,7 @@ class _baseBuildHandler extends _deployAction {
 
     this._outputStage(`After Build Command`)
     await this._executeCommands(
-      DEPLOY_ENV.CONFIG.build.afterBuildCommand,
+      DEPLOY_ENV.CONFIG.build.afterBuildCommands,
       DEPLOY_ENV.SOURCE_PATH
     )
     await this._callHook('build.afterBuildHook')
