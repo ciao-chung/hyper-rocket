@@ -1,4 +1,5 @@
 const _deployAction = require('./actions/_deployAction')
+const ciConfigService = require('@services/ciConfigService.js')
 const mailService = require('@services/mailService.js')
 const slackWebHookService = require('@services/slackWebHookService.js')
 const lineNotifyService = require('@services/lineNotifyService.js')
@@ -12,6 +13,8 @@ class integration extends _deployAction {
   }
 
   async _init() {
+    this.serviceEnabled = ciConfigService.ciConfigExist() === true
+    if(!this.serviceEnabled) return
     this.mailService.init()
     this.slackWebHookService.init()
     this.lineNotifyService.init()
