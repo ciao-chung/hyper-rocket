@@ -1,4 +1,5 @@
 const { resolve } = require('path')
+const { existsSync } = require('fs')
 const _deployAction = require('../actions/_deployAction.js')
 class _baseBuildHandler extends _deployAction {
 
@@ -20,6 +21,13 @@ class _baseBuildHandler extends _deployAction {
   }
 
   async build() {
+    const deployCommitPath = resolve(DEPLOY_ENV.PROJECT_PATH, 'deploy.commit')
+    if(existsSync(deployCommitPath)) {
+      await execAsync(`cp ${deployCommitPath} ${DEPLOY_ENV.DIST_PATH}`, {
+        cwd: DEPLOY_ENV.PROJECT_PATH,
+      })
+    }
+
     await this._callHook('build.beforeBuildHook')
     this._outputStage(`Before Build Command`)
     await this._executeCommands(
