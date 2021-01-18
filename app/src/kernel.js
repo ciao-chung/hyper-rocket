@@ -83,7 +83,7 @@ class kernel {
       async: true,
       quiet: false, // quiet mode
       ignoreError: false,
-      removeSudo: global.removeSudo === true,
+      removeSudo: global.removeSudo === false,
       ...options,
     }
 
