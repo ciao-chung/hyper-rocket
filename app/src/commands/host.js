@@ -106,7 +106,7 @@ class Host extends Command {
       return
     }
 
-    const command = `ssh -o StrictHostKeyChecking=no ${host.user}@${host.host}`
+    const command = `ssh ${host.user}@${host.host}`
     await clipboardy.writeSync(command)
     notify(`登入指令已複製到剪貼簿`)
     logger(`登入指令已複製到剪貼簿`)
