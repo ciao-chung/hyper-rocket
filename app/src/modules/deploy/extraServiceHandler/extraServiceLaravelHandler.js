@@ -1,8 +1,16 @@
+const { resolve } = require('path')
 const _baseExtraServiceHandler = require('./_baseExtraServiceHandler')
 class extraServiceLaravelHandler extends _baseExtraServiceHandler{
   async _setupEachServerExtraService(index, server) {
     this.remoteLaravelPath = DEPLOY_ENV.CONFIG.rsync.path
     await this._startQueueWorkers(server)
+  }
+
+  setupQueueWorkEnv(queueConfig) {
+    if(!queueConfig) return
+    const workerDir = !queueConfig.workerDir ? 'queue' : queueConfig.workerDir
+    DEPLOY_ENV.QUEUE_WORKER_DIR = resolve(DEPLOY_ENV.DIST_PATH, workerDir)
+    DEPLOY_ENV.QUEUE_WORKER_DIRNAME = workerDir
   }
 
   async _startQueueWorkers(server) {
@@ -11,6 +19,7 @@ class extraServiceLaravelHandler extends _baseExtraServiceHandler{
     if(queue.enabled != true) return
     if(!Array.isArray(queue.workers)) return
     if(queue.workers.length == 0) return
+    this.setupQueueWorkEnv(queue)
     this._outputStage(`開始啟動Queue workers`)
     for (const worker of queue.workers) {
       try {
