@@ -6,9 +6,7 @@ class proxy extends Command {
     global.removeSudo = flags.removeSudo
     this.commandFlags = flags
 
-    const templatePath = this.commandFlags.ssl === true
-      ? '/nginx/site-proxy-ssl.conf'
-      : '/nginx/site-proxy.conf'
+    const templatePath = '/nginx/site-proxy.conf'
     const nginxConf = global.renderService.render(templatePath, {
       proxyPort: this.commandFlags.proxyPort,
       host: this.commandFlags.host,
