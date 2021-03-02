@@ -24,7 +24,7 @@ class remove extends Command {
 
     logger(``)
     logger(`開始刪除${this.commandFlags.domain}的SSL憑證`)
-    await execAsync(`sudo certbot delete --cert-name ${this.domain}`)
+    await execAsync(`sudo certbot delete --cert-name ${this.commandFlags.domain}`)
     await execAsync(`sudo nginx -t`)
     if(this.commandFlags.restart) {
       await execAsync(`sudo service nginx restart`)
