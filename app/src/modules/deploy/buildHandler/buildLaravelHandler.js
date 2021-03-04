@@ -30,6 +30,7 @@ class buildLaravelHandler extends _baseBuildHandler {
     this._outputStage(`開始設定Laravel .env設定檔`)
     for(const key in backendEnv) {
       const value = backendEnv[key]
+      logger(`正在設定env變數: ${key}`, 'yellow')
       await execAsync(`php artisan env:set ${key} "${value}" --quiet`, {
         cwd: DEPLOY_ENV.SOURCE_PATH,
         quiet: true,
