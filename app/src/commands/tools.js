@@ -18,8 +18,8 @@ class ToolsCommand extends Command {
     }
 
     if(flags.all === true || flags.git) {
-      await execAsync(`git config --global core.editor vim`)
       await execAsync(`sudo apt-get install git -y`)
+      await execAsync(`git config --global core.editor vim`)
     }
 
     if(flags.all === true || flags.curl) {
