@@ -29,6 +29,8 @@ class userCreate extends Command {
         await execAsync(`mysql -uroot -e "ALTER USER ${this.username} IDENTIFIED WITH mysql_native_password BY '${this.userPassword}';"`, {
           quiet: true,
         })
+
+        await execAsync(`mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO '${this.username}'@'%';"`)
       }
 
       else {
