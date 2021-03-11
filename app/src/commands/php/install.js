@@ -72,7 +72,7 @@ class PhpInstallCommand extends Command {
       await execAsync(`php -m | grep imagick`)
 
       // 有該版本專用的imagick就安裝
-      await execAsync(`sudo apt-get install php${this.version}--imagick -y`, {
+      await execAsync(`sudo apt-get install php${this.version}-imagick -y`, {
         ignoreError: true,
       })
     }

@@ -5,6 +5,9 @@ class ngrok {
     await execAsync(`unzip ngrok-stable-linux-amd64.zip`)
     await execAsync(`sudo mv ngrok /usr/bin`)
     await execAsync(`ngrok`)
+    await execAsync(`rm ngrok-stable-linux-amd64.zip`, {
+      ignoreError: true,
+    })
   }
 }
 
