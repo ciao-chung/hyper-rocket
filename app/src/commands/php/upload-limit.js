@@ -24,7 +24,9 @@ class uploadLimit extends Command {
 }
 
 uploadLimit.description = `
-設定php最大上傳限制`
+設定php最大上傳限制
+如果有使用php-fpm請設定/etc/php/7.x/fpm/php.ini
+`
 
 uploadLimit.flags = {
   path: flags.string({

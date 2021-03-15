@@ -1,4 +1,5 @@
 const { resolve } = require('path')
+const { existsSync } = require('fs')
 const _baseBuildHandler = require('./_baseBuildHandler')
 class buildLaravelHandler extends _baseBuildHandler {
   async setupDistPath() {
@@ -26,6 +27,18 @@ class buildLaravelHandler extends _baseBuildHandler {
       cwd: DEPLOY_ENV.SOURCE_PATH,
     })
     const backendEnv = DEPLOY_ENV.CONFIG.build.env
+    const backendEnvFilePath = DEPLOY_ENV.CONFIG.build.envFilePath
+    if(backendEnvFilePath) {
+      const envAbsolutePath = resolve(DEPLOY_ENV.CONFIG_DIR, backendEnvFilePath)
+      if(existsSync(envAbsolutePath)) {
+        logger(`開始使用 ${envAbsolutePath} 作為laravel env檔`)
+        await execAsync(`cp ${envAbsolutePath} .env`, {
+          cwd: DEPLOY_ENV.SOURCE_PATH,
+        })
+        return
+      }
+    }
+
     if(typeof backendEnv != 'object') return
     this._outputStage(`開始設定Laravel .env設定檔`)
     for(const key in backendEnv) {

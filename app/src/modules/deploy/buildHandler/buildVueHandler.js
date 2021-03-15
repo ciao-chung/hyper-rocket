@@ -1,4 +1,5 @@
 const { resolve } = require('path')
+const { existsSync } = require('fs')
 const _baseBuildHandler = require('./_baseBuildHandler')
 class buildVueHandler extends _baseBuildHandler {
   async setupDistPath() {
@@ -13,10 +14,28 @@ class buildVueHandler extends _baseBuildHandler {
   }
 
   async _startBuild() {
+    await this._addDeployCommit()
     await this._yarnInstall()
     await this._setupApiBase()
     await this._setupEnvFile()
     await this._buildWebpack()
+  }
+
+  async _addDeployCommit() {
+    const deployCommitFilePath = resolve(DEPLOY_ENV.PROJECT_PATH, 'deploy.commit')
+    if(existsSync(deployCommitFilePath) === false) {
+      logger(`找不到deploy.commit檔案(${deployCommitFilePath})`, 'yellow')
+      return
+    }
+
+    try {
+      await execAsync(`cp ${deployCommitFilePath} public`, {
+        cwd: DEPLOY_ENV.SOURCE_PATH,
+      })
+    } catch (error) {
+      logger(error, 'red')
+      logger(`deploy.commit檔案複製失敗`, 'yellow')
+    }
   }
 
   async _yarnInstall() {
