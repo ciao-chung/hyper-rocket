@@ -6,6 +6,9 @@ class buildVueHandler extends _baseBuildHandler {
     const distDir = !DEPLOY_ENV.CONFIG.build.distDir
       ? 'dist'
       : DEPLOY_ENV.CONFIG.build.distDir
+    this.vuePublicFolderPath = !DEPLOY_ENV.CONFIG.build.vuePublicFolderPath
+      ? 'public'
+      : DEPLOY_ENV.CONFIG.build.vuePublicFolderPath
     DEPLOY_ENV.DIST_PATH = resolve(DEPLOY_ENV.SOURCE_PATH, distDir)
   }
 
@@ -29,7 +32,7 @@ class buildVueHandler extends _baseBuildHandler {
     }
 
     try {
-      await execAsync(`cp ${deployCommitFilePath} public`, {
+      await execAsync(`cp ${deployCommitFilePath} ${this.vuePublicFolderPath}`, {
         cwd: DEPLOY_ENV.SOURCE_PATH,
       })
     } catch (error) {
