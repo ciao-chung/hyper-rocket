@@ -71,6 +71,7 @@ hyper-rocket deploy:execute -x \
 - apibase(optional): String, 設定apibase.json
 - apibasePath(optional): String, 指定apibase的檔案相對路徑, 預設為src/config/apibase.json
 - env(optional): Object, 佈署指令將會把此env物件設定到src/config/env.json, 當前端一些設定需要依照不同佈署設定來調整的時候, env屬性將是一個很好的選擇
+- vuePublicFolderPath(optional): String, vue專案的public目錄(root)名稱, 使用nuxt.js為static
 
 ### rsync(optional)
 
@@ -117,6 +118,15 @@ hyper-rocket deploy:execute -x \
 - comment(optional): String, cron job檔案上方的註解, 可用來註明此cron job用途
 - onServerTag(optional): String, 只將cron job佈署在含有指定tag的server上
 - rules(required): Array, cron job規則陣列, 例如: 0 5 * * * /sbin/shutdown -r now
+
+### nuxtPm2Config(optional)
+
+> Nuxt佈署類型專用, 可在設定nuxt.js啟動的pm2 config
+
+**可用屬性**
+
+- configFile(required): String, 設定檔樣板路徑(相對前端目錄的路徑)
+- variable(optional): Object, pm2 config檔案使用mustache.js的變數, 此屬性為設定檔內變數
 
 ### queue(optional)
 

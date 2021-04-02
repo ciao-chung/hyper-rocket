@@ -18,6 +18,7 @@ class buildVueHandler extends _baseBuildHandler {
 
   async _startBuild() {
     await this._addDeployCommit()
+    await this._setupNuxtPm2Config()
     await this._yarnInstall()
     await this._setupApiBase()
     await this._setupEnvFile()
@@ -39,6 +40,23 @@ class buildVueHandler extends _baseBuildHandler {
       logger(error, 'red')
       logger(`deploy.commit檔案複製失敗`, 'yellow')
     }
+  }
+
+  async _setupNuxtPm2Config() {
+    const nuxtPm2Config = DEPLOY_ENV.CONFIG.nuxtPm2Config
+    if(!nuxtPm2Config) return
+    const configFilePath = resolve(DEPLOY_ENV.SOURCE_PATH, nuxtPm2Config.configFile)
+
+    if(existsSync(configFilePath) === false) {
+      logger(`找不到nuxt.js pm2設定檔(${configFilePath})`, 'yellow')
+      return
+    }
+
+    const variable = typeof nuxtPm2Config.variable != 'object' ? {} : nuxtPm2Config.variable
+    const yamlFileContent = global.renderService.render(configFilePath, variable, {
+      absolutePath: true,
+    })
+    await writeFile(configFilePath, yamlFileContent)
   }
 
   async _yarnInstall() {
