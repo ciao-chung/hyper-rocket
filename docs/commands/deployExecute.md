@@ -125,7 +125,9 @@ hyper-rocket deploy:execute -x \
 
 **可用屬性**
 
-- configFile(required): String, 設定檔樣板路徑(相對前端目錄的路徑)
+- configFile(required): String, pm2設定檔樣板路徑(相對前端目錄的路徑)
+- remoteConfigFilePath(required): String, 遠端pm2設定檔路徑
+- appName(required): String, server pm2 process name(啟動process之前刪除舊的process用)
 - variable(optional): Object, pm2 config檔案使用mustache.js的變數, 此屬性為設定檔內變數
 
 ### queue(optional)

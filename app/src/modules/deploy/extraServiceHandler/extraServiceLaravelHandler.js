@@ -49,11 +49,6 @@ class extraServiceLaravelHandler extends _baseExtraServiceHandler{
       remoteCwd: this.remoteLaravelPath,
     })
 
-    await execOnServer(server, `sudo pm2 start ${remoteQueueWorkerFilePath} --restart-delay=1000`, {
-      ignoreError: true,
-      remoteCwd: this.remoteLaravelPath,
-    })
-
     await execOnServer(server, `sudo pm2 startup`, {
       ignoreError: true,
       remoteCwd: this.remoteLaravelPath,

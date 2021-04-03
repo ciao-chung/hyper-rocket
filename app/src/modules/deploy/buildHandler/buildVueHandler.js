@@ -10,6 +10,8 @@ class buildVueHandler extends _baseBuildHandler {
       ? 'public'
       : DEPLOY_ENV.CONFIG.build.vuePublicFolderPath
     DEPLOY_ENV.DIST_PATH = resolve(DEPLOY_ENV.SOURCE_PATH, distDir)
+
+    this.nuxtPm2Config = DEPLOY_ENV.CONFIG.nuxtPm2Config
   }
 
   async _beforeBuild() {
@@ -43,16 +45,15 @@ class buildVueHandler extends _baseBuildHandler {
   }
 
   async _setupNuxtPm2Config() {
-    const nuxtPm2Config = DEPLOY_ENV.CONFIG.nuxtPm2Config
-    if(!nuxtPm2Config) return
-    const configFilePath = resolve(DEPLOY_ENV.SOURCE_PATH, nuxtPm2Config.configFile)
+    if(!this.nuxtPm2Config) return
+    const configFilePath = resolve(DEPLOY_ENV.SOURCE_PATH, this.nuxtPm2Config.configFile)
 
     if(existsSync(configFilePath) === false) {
       logger(`找不到nuxt.js pm2設定檔(${configFilePath})`, 'yellow')
       return
     }
 
-    const variable = typeof nuxtPm2Config.variable != 'object' ? {} : nuxtPm2Config.variable
+    const variable = typeof this.nuxtPm2Config.variable != 'object' ? {} : this.nuxtPm2Config.variable
     const yamlFileContent = global.renderService.render(configFilePath, variable, {
       absolutePath: true,
     })
@@ -60,9 +61,7 @@ class buildVueHandler extends _baseBuildHandler {
   }
 
   async _yarnInstall() {
-    await execAsync(`yarn install`, {
-      cwd: DEPLOY_ENV.SOURCE_PATH,
-    })
+    await execAsync(`yarn install`, { cwd: DEPLOY_ENV.SOURCE_PATH })
   }
 
   async _setupApiBase() {
