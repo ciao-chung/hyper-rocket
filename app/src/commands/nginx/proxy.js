@@ -85,7 +85,7 @@ proxy.flags = {
     default: 'http://127.0.0.1',
   }),
   email: flags.string({
-    description: 'Let\s encrypt email',
+    description: 'Let\'s encrypt email',
   }),
   removeSudo: global.removeSudoFlag(flags),
 }

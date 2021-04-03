@@ -1,26 +1,19 @@
 const {Command, flags} = require('@oclif/command')
 
-class site extends Command {
+class nuxt extends Command {
   async run() {
-    const {flags} = this.parse(site)
+    const {flags} = this.parse(nuxt)
     global.removeSudo = flags.removeSudo
     this.commandFlags = flags
-    this.phpVersion = await getPhpVersion()
-    this.templateData = {
-      phpVersion: this.phpVersion,
+
+    const templatePath = '/nginx/site-nuxt.conf'
+    const nginxConf = global.renderService.render(templatePath, {
+      proxyPort: this.commandFlags.proxyPort,
+      host: this.commandFlags.host,
       port: this.commandFlags.port,
       path: this.commandFlags.path,
       domain: this.commandFlags.domain,
-    }
-
-    // 先設定HTTP版本
-    let baseHttpNginxConfigTemplate = this._getBaseHttpNginxTemplate()
-
-    if(!baseHttpNginxConfigTemplate) {
-      logger(`找不到符合的nginx設定樣板`, 'yellow')
-      return
-    }
-    const nginxConf = global.renderService.render(baseHttpNginxConfigTemplate, this.templateData)
+    })
 
     const configPath = `/etc/nginx/sites-available/${this.commandFlags.filename}`
     logger(`正在建立Nginx設定檔: ${configPath}`, 'blue')
@@ -47,7 +40,7 @@ class site extends Command {
   }
 
   async _createSslNginxConfig() {
-    let nginxConfigTemplate = this._getSslNginxTemplate()
+    let nginxConfigTemplate = '/nginx/site-nuxt-ssl.conf'
 
     if(!nginxConfigTemplate) {
       logger(`找不到符合的nginx設定樣板`, 'yellow')
@@ -58,22 +51,13 @@ class site extends Command {
     logger(`正在建立Nginx設定檔: ${configPath}`, 'blue')
     await writeFileAsRoot(configPath, nginxConf)
   }
-
-  _getBaseHttpNginxTemplate() {
-    if(this.commandFlags.spa === true) return 'nginx/site-spa.conf'
-    return 'nginx/site-php.conf'
-  }
-
-  _getSslNginxTemplate() {
-    if(this.commandFlags.spa === true) return 'nginx/site-spa-ssl.conf'
-    return 'nginx/site-php-ssl.conf'
-  }
 }
 
-site.description = `
-設定網站Virtual Host`
+nuxt.description = `
+設定Nuxt.js Server Virtual Host
+`
 
-site.flags = {
+nuxt.flags = {
   filename: flags.string({
     required: true,
     char: 'f',
@@ -81,24 +65,27 @@ site.flags = {
 例如: site.conf`,
   }),
   enabled: flags.boolean({ description: '直接啟用(預設為true)', default: true }),
-  spa: flags.boolean({ description: 'Single Page Application', default: false }),
   ssl: flags.boolean({ description: '使用SSL', default: false }),
-  port: flags.string({
-    description: 'Port(預設為80)',
-    default: 80,
-  }),
   domain: flags.string({
     required: true,
-    description: '網域',
+    description: '網域, 如果是本機請使用localhost',
+  }),
+  proxyPort: flags.string({
+    description: '轉接的Port(預設為80)',
+    default: 80,
+  }),
+  port: flags.string({
+    required: true,
+    description: '內部Proxy Port',
+  }),
+  host: flags.string({
+    description: 'host名稱, 預設為http://127.0.0.1',
+    default: 'http://127.0.0.1',
   }),
   email: flags.string({
     description: 'Let\'s encrypt email',
   }),
-  path: flags.string({
-    required: true,
-    description: '網站路徑, 結尾請勿使用/符號',
-  }),
   removeSudo: global.removeSudoFlag(flags),
 }
 
-module.exports = site
+module.exports = nuxt
