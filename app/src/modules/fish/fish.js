@@ -118,6 +118,7 @@ alias .....="cd ../../../../"
 alias phpu="./vendor/bin/phpunit"
 alias sf="app/console"
 alias sshsample="ssh -o StrictHostKeyChecking=no username@host.com"
+set -g fish_prompt_pwd_dir_length 0
 `
   }
 }

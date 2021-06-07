@@ -7,13 +7,14 @@ class proxy extends Command {
     this.commandFlags = flags
 
     const templatePath = '/nginx/site-proxy.conf'
-    const nginxConf = global.renderService.render(templatePath, {
+    this.templateData = {
       proxyPort: this.commandFlags.proxyPort,
       host: this.commandFlags.host,
       port: this.commandFlags.port,
       path: this.commandFlags.path,
       domain: this.commandFlags.domain,
-    })
+    }
+    const nginxConf = global.renderService.render(templatePath, this.templateData)
 
     const configPath = `/etc/nginx/sites-available/${this.commandFlags.filename}`
     logger(`正在建立Nginx設定檔: ${configPath}`, 'blue')
