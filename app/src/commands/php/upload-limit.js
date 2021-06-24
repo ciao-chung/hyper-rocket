@@ -20,6 +20,7 @@ class uploadLimit extends Command {
       return
     }
     await execAsync(`sudo sed -i 's,^upload_max_filesize =.*$,upload_max_filesize = ${this.size},' ${this.phpIniPath}`)
+    await execAsync(`sudo sed -i 's,^post_max_size =.*$,post_max_size = ${this.size},' ${this.phpIniPath}`)
   }
 }
 
