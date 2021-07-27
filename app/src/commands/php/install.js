@@ -58,7 +58,7 @@ class PhpInstallCommand extends Command {
     await execAsync(`php -r "unlink('composer-setup.php');"`)
     await execAsync(`sudo mv composer.phar /usr/local/bin/composer`)
     if(this.composerVersion) {
-      await execAsync(`composer self-update ${this.composerVersion}`, {
+      await execAsync(`sudo composer self-update ${this.composerVersion}`, {
         ignoreError: true,
       })
     }
