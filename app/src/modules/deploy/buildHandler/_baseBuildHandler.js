@@ -23,7 +23,7 @@ class _baseBuildHandler extends _deployAction {
   async build() {
     const deployCommitPath = resolve(DEPLOY_ENV.PROJECT_PATH, 'deploy.commit')
 
-    const distPathIsDirectory = lstatSync(deployCommitPath).isDirectory()
+    const distPathIsDirectory = lstatSync(DEPLOY_ENV.PROJECT_PATH).isDirectory()
     if(distPathIsDirectory) {
       await execAsync(`cp ${deployCommitPath} ${DEPLOY_ENV.DIST_PATH}`, {
         cwd: DEPLOY_ENV.PROJECT_PATH,
