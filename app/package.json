@@ -86,6 +86,9 @@
       },
       "mysql": {
         "description": "MySQL相關環境建立、設定、資訊查詢"
+      },
+      "port": {
+        "description": "Process Port的相關處理"
       }
     }
   },

@@ -17,7 +17,8 @@ class fish {
     await execAsync(`sudo apt-get update`)
     await execAsync(`sudo apt-get install fish -y`)
     await execAsync(`sudo usermod -s /usr/bin/fish ${os.userInfo().username}`)
-    await execAsync(`curl -L https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install > install;`, { cwd: this.pwd })
+    await execAsync(`curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install > install`, { cwd: this.pwd })
+    await execAsync(`curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install > install;`, { cwd: this.pwd })
     await execAsync(`fish install --path=~/.local/share/omf --config=~/.config/omf --noninteractive`, { cwd: this.pwd })
     await execAsync(`rm install`, { cwd: this.pwd })
   }

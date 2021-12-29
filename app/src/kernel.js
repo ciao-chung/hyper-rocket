@@ -38,6 +38,7 @@ class kernel {
       default: false,
     })
     global.execAsync = (command, options) => this.execAsync(command, options)
+    global.getPidByPort = this.getPidByPort
     global.getPhpVersion = this.getPhpVersion
     global.execDelay = this.execDelay
     global.runFishShell = this.runFishShell
@@ -160,6 +161,20 @@ class kernel {
       if(!result.log) return null
       const partials = result.log.split('.')
       return `${partials[0]}.${partials[1]}`
+    } catch (error) {
+      return null
+    }
+  }
+
+  async getPidByPort(port) {
+    try {
+      const result = await execAsync(`lsof -t -i:${port}`, {
+        quiet: true,
+      })
+      logger('')
+      if(!result.log) return null
+      const partials = result.log.split('\n')
+      return partials[0]
     } catch (error) {
       return null
     }
