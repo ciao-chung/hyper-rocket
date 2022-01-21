@@ -38,6 +38,7 @@ yarn global add hyper-rocket
 ## 版本
 
 - 1.x: 整理主要功能中
+- 2.x: 新增nuxt佈署功能
 
 ## 指令說明
 
