@@ -6,15 +6,6 @@
 :src="$withBase('/demo.gif')"
 style="width: 100%">
 
-## 主要用途
-
-- 工作環境建置
-- production環境佈署
-- 簡易使用rsync功能
-- 簡易操作mysql服務
-- 快速設定vue/laravel的nginx config
-- 快速設定php-fpm
-
 ## 環境需求
 
 Node.js 10 up (可以直接執行專案內的meta/nodejs.sh來安裝)
@@ -47,3 +38,7 @@ yarn global add hyper-rocket
 基本上只要使用--help查看資訊即可
 
 較複雜的指令請查看文件
+
+## Github
+
+[https://github.com/ciao-chung/hyper-rocket](https://github.com/ciao-chung/hyper-rocket)
