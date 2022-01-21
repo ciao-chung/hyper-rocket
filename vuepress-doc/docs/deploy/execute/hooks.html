@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Hooks</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/hyper-rocket/logo.png">
+    <link rel="manifest" href="/hyper-rocket/manifest.json">
+    <link rel="mask-icon" href="/hyper-rocket/icon.png" color="#1bd5e3">
+    <link rel="apple-touch-icon" href="/hyper-rocket/icon.png">
+    <meta name="description" content="">
+    <meta name="theme-color" content="#1bd5e3">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-TileImage" content="/hyper-rocket/icon.png">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="Hyper Rocket">
+    <meta name="og:title" content="Hyper Rocket">
+    <meta name="og:site_name" content="Hyper Rocket">
+    <meta name="og:image" content="https://ciao-chung.github.io/hyper-rocket/logo.png">
+    <meta name="og:description" content="Hyper Rocket">
+    
+    <link rel="preload" href="/hyper-rocket/assets/css/0.styles.5fcfe61d.css" as="style"><link rel="preload" href="/hyper-rocket/assets/js/app.fb56e920.js" as="script"><link rel="preload" href="/hyper-rocket/assets/js/2.daf7a04b.js" as="script"><link rel="preload" href="/hyper-rocket/assets/js/11.f1eb56d5.js" as="script"><link rel="preload" href="/hyper-rocket/assets/js/3.75cb8508.js" as="script"><link rel="prefetch" href="/hyper-rocket/assets/js/10.98c3b305.js"><link rel="prefetch" href="/hyper-rocket/assets/js/12.953e8117.js"><link rel="prefetch" href="/hyper-rocket/assets/js/13.1689a888.js"><link rel="prefetch" href="/hyper-rocket/assets/js/14.19717449.js"><link rel="prefetch" href="/hyper-rocket/assets/js/15.7061ffe4.js"><link rel="prefetch" href="/hyper-rocket/assets/js/16.cddae4e0.js"><link rel="prefetch" href="/hyper-rocket/assets/js/4.3ea03653.js"><link rel="prefetch" href="/hyper-rocket/assets/js/5.bd68e4c8.js"><link rel="prefetch" href="/hyper-rocket/assets/js/6.fa6c4a53.js"><link rel="prefetch" href="/hyper-rocket/assets/js/7.d5eb02ac.js"><link rel="prefetch" href="/hyper-rocket/assets/js/8.db579477.js"><link rel="prefetch" href="/hyper-rocket/assets/js/9.fc85cb76.js">
+    <link rel="stylesheet" href="/hyper-rocket/assets/css/0.styles.5fcfe61d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/hyper-rocket/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><a href="/hyper-rocket/" aria-current="page" class="sidebar-link">hyper-rocket</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>佈署</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/hyper-rocket/deploy/execute.html" class="sidebar-link">執行佈署(deploy:execute)</a></li><li><a href="/hyper-rocket/deploy/executeEnv.html" class="sidebar-link">佈署環境變數(DEPLOY_ENV)說明</a></li><li><a href="/hyper-rocket/deploy/executeVue.html" class="sidebar-link">Vue Site佈署</a></li><li><a href="/hyper-rocket/deploy/executeNuxt.html" class="sidebar-link">Nuxt Site佈署</a></li><li><a href="/hyper-rocket/deploy/executeLaravel.html" class="sidebar-link">Laravel佈署</a></li><li><a href="/hyper-rocket/deploy/execute/hooks.html" aria-current="page" class="active sidebar-link">Hooks</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/hyper-rocket/deploy/execute/hooks.html#hook範例" class="sidebar-link">Hook範例</a></li><li class="sidebar-sub-header"><a href="/hyper-rocket/deploy/execute/hooks.html#hook中可使用的global變數、物件、method" class="sidebar-link">Hook中可使用的global變數、物件、method</a></li></ul></li><li><a href="/hyper-rocket/deploy/execute/commandArray.html" class="sidebar-link">設定檔 - 指令陣列/遠端指令陣列</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="hooks"><a href="#hooks" class="header-anchor">#</a> Hooks</h1> <p>指定佈署設定YAML檔案的相對路徑js檔</p> <p>並在該js中使用module.export回傳一個async callback</p> <p>讓佈署指令可在指定階段自動調用該callback</p> <h2 id="hook範例"><a href="#hook範例" class="header-anchor">#</a> Hook範例</h2> <div class="language-javascript extra-class"><pre class="language-javascript"><code>module<span class="token punctuation">.</span><span class="token function-variable function">exports</span> <span class="token operator">=</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span>global<span class="token punctuation">.</span><span class="token constant">DEPLOY_ENV</span><span class="token punctuation">)</span>
+  console<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">'before build...'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="hook中可使用的global變數、物件、method"><a href="#hook中可使用的global變數、物件、method" class="header-anchor">#</a> Hook中可使用的global變數、物件、method</h2></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/hyper-rocket/deploy/executeLaravel.html" class="prev">
+        Laravel佈署
+      </a></span> <span class="next"><a href="/hyper-rocket/deploy/execute/commandArray.html">
+        設定檔 - 指令陣列/遠端指令陣列
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/hyper-rocket/assets/js/app.fb56e920.js" defer></script><script src="/hyper-rocket/assets/js/2.daf7a04b.js" defer></script><script src="/hyper-rocket/assets/js/11.f1eb56d5.js" defer></script><script src="/hyper-rocket/assets/js/3.75cb8508.js" defer></script>
+  </body>
+</html>
