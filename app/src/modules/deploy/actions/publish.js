@@ -16,6 +16,7 @@ class publish extends _deployAction {
     const publishHandlers = {
       default: require('@modules/deploy/publishHandler/publishDefaultHandler'),
       vue: require('@modules/deploy/publishHandler/publishVueHandler'),
+      nuxt: require('@modules/deploy/publishHandler/publishNuxtHandler'),
       laravel: require('@modules/deploy/publishHandler/publishLaravelHandler'),
     }
 

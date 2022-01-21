@@ -87,6 +87,7 @@ class init extends _deployAction {
     let result = 'default'
     if(config.type === 'vue') return 'vue'
     if(config.type === 'laravel') return 'laravel'
+    if(config.type === 'nuxt') return 'nuxt'
     return result
   }
 

@@ -11,6 +11,7 @@ class build extends _deployAction {
     const buildHandlers = {
       default: require('@modules/deploy/buildHandler/buildDefaultHandler'),
       vue: require('@modules/deploy/buildHandler/buildVueHandler'),
+      nuxt: require('@modules/deploy/buildHandler/buildNuxtHandler'),
       laravel: require('@modules/deploy/buildHandler/buildLaravelHandler'),
     }
     let buildHandler = buildHandlers[DEPLOY_ENV.DEPLOY_TYPE]
