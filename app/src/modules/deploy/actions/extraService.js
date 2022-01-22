@@ -16,6 +16,7 @@ class extraService extends _deployAction {
     const extraServiceHandlers = {
       default: require('@modules/deploy/extraServiceHandler/extraServiceDefaultHandler'),
       vue: require('@modules/deploy/extraServiceHandler/extraServiceVueHandler'),
+      nuxt: require('@modules/deploy/extraServiceHandler/extraServiceNuxtHandler'),
       laravel: require('@modules/deploy/extraServiceHandler/extraServiceLaravelHandler'),
     }
 

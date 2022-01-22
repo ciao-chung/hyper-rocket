@@ -3,7 +3,7 @@ class publishNuxtHandler extends _basePublishHandler{
   async publish() {
     this.remoteNuxtPath = DEPLOY_ENV.CONFIG.rsync.path
     this.nuxtConfig = DEPLOY_ENV.CONFIG.nuxt
-    this.nuxtTarget = this.nuxtConfig.nuxt === 'server' ? 'server' : 'static'
+    this.nuxtTarget = this.nuxtConfig.target === 'server' ? 'server' : 'static'
     await this.publishMultiServer()
   }
 

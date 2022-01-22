@@ -68,6 +68,7 @@ class buildNuxtHandler extends _baseBuildHandler {
     const nuxtPm2Config = global.renderService.render('/nuxt/pm2-config.yml', {
       pm2ProcessName: this.nuxtConfig.pm2AppName,
       cwd: this.remoteNuxtPath,
+      port: this.nuxtConfig.port || '8888',
     })
     await writeFile(nuxtPm2ConfigPath, nuxtPm2Config)
   }

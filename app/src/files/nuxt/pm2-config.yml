@@ -3,5 +3,7 @@ apps:
     cwd: {{{cwd}}}
     exec_mode: cluster,
     script: './node_modules/nuxt/bin/nuxt.js',
-    args: start
     instances: 1
+    args:
+      - start
+      - --port={{port}}

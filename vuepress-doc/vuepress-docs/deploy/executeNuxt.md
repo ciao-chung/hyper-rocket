@@ -13,6 +13,7 @@
 
 - target(required): `nuxt target`, 可用值為`server`或`static` 
 - pm2AppName(optional): `nuxt target`為`server`時, 需要透過`pm2`啟動`nuxt`, 這個設定為該`pm2`的`process name`, 預設為`nuxt-site`
+- port(optional): `nuxt start`啟動的`port`, 預設為`8888`
 
 ## rsync屬性額外子屬性
 

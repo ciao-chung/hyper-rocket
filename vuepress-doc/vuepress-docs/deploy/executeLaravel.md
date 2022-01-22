@@ -12,7 +12,10 @@
 
 - enabled(required): Boolean, 是否啟用Laravel Queue Worker
 - workerDir(optional): String, 設定laravel queue worker設定檔目錄名稱, 預設為queue
-- workers(required): Array, QueueWorker設定物件陣列
+- workers(optional): Array, QueueWorker設定物件陣列
+- build
+  - env(optional): Object, 覆蓋.env.example的設定(透過`php artisan env:set`)
+  - envFilePath(optional): Laravel .env設定檔案位置, 若使用此設定上述`env`屬性將無效
 
 **QueueWorker設定物件**
 

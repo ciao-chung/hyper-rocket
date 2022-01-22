@@ -17,7 +17,11 @@ class install extends Command {
 
   async _installNginx() {
     await execAsync(`sudo apt-get install nginx -y`)
-    await execAsync(`sudo apt-add-repository -y ppa:hda-me/nginx-stable -y`)
+    try {
+      await execAsync(`sudo apt-add-repository -y ppa:hda-me/nginx-stable -y`)
+    } catch {
+      await execAsync(`sudo apt-add-repository -y ppa:hda-me/nginx-stable -r -y`)
+    }
     await execAsync(`sudo apt-get update -y`)
     await execAsync(`sudo apt-get install nginx-module-brotli -y`)
     await execAsync(`sudo rm -f /etc/nginx/sites-available/default.conf`, {
