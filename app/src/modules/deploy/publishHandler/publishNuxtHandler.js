@@ -21,6 +21,7 @@ class publishNuxtHandler extends _basePublishHandler{
   }
 
   async _serverSideBuild(server) {
+    if(this.nuxtConfig.buildAtClient == true) return
     await execOnServer(server, `yarn install`, {
       ignoreError: true,
       remoteCwd: this.remoteNuxtPath,

@@ -79,6 +79,15 @@ class _deployAction {
     if(server.local) {
       script = `rsync -avzh ${server.from}/ ${server.to}`
     }
+
+    if(server.tar === true) {
+      logger(`[即將透過壓縮模式rsync檔案]`, 'yellow')
+      const parentPathOfDist = resolve(server.from, '../')
+      const parentPathOfRemoteDist = resolve(server.to, '../')
+      const archiveFolderName = getLastPathItem(server.from)
+      script = `cd ${parentPathOfDist}; tar -cz ${archiveFolderName} | ssh -o StrictHostKeyChecking=no ${server.user}@${server.host} tar -xz --directory ${parentPathOfRemoteDist}`
+    }
+
     await execAsync(script)
   }
 

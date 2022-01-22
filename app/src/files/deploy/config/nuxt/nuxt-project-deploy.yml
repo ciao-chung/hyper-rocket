@@ -1,7 +1,7 @@
-type: vue
+type: nuxt
 
 info:
-  label: 'VueJS範例佈署'
+  label: 'Nuxt範例佈署'
 
 source:
   fetchType: git
@@ -31,10 +31,10 @@ rsync:
     - script: service nginx restart
     - script: service php7.4-fpm restart
   removeRemoteBeforeRsync: true
-  path: /site/vue
+  path: /site/nuxt
   meta:
     - path: ./metaFiles
-      to: /site/vue-meta-files
+      to: /site/nuxt-meta-files
 
 servers:
   - host: remote.host
@@ -43,9 +43,9 @@ servers:
 
 cron:
   enable: false
-  name: vue
+  name: nuxt
   user: site
-  comment: VueJs佈署CronJob範例
+  comment: Nuxt佈署CronJob範例
   rules:
     - 0 5 * * * /sbin/shutdown -r now
     - 0 7 * * * service php7.4-fpm restart

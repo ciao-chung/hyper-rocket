@@ -1,8 +1,8 @@
 apps:
   - name: {{pm2ProcessName}}
     cwd: {{{cwd}}}
-    exec_mode: cluster,
-    script: './node_modules/nuxt/bin/nuxt.js',
+    exec_mode: cluster
+    script: ./node_modules/nuxt/bin/nuxt.js
     instances: 1
     args:
       - start

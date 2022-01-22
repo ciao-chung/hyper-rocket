@@ -80,6 +80,7 @@ hyper-rocket deploy:execute -x \
 **一般屬性**
 
 - path: 要rsync到遠端的目錄
+- tar(optional): 使用`tar`做壓縮來傳輸檔案加速
 - meta: Array, 額外要rsync的檔案或目錄(rsync專案dist目錄之前會先做rsync), 每個陣列item可設定以下屬性
     - path: String, 與佈署設定檔的相對路徑檔案或目錄
     - to: String, 要rsync到遠端的位置

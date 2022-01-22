@@ -74,6 +74,7 @@ class _basePublishHandler extends _deployAction{
     // rsync
     logger(`DEPLOY_ENV.DIST_PATH: ${DEPLOY_ENV.DIST_PATH}`)
     await this._rsync({
+      tar: DEPLOY_ENV.CONFIG.rsync.tar == true,
       from: DEPLOY_ENV.DIST_PATH,
       to: DEPLOY_ENV.CONFIG.rsync.path,
       local: server.local,

@@ -26,6 +26,11 @@ class deployConfigService {
           configFilename: 'laravel-project-deploy.yml'
         }
         break
+      case 'nuxt':
+        this.info = {
+          configFilename: 'nuxt-project-deploy.yml'
+        }
+        break
       default:
         this.info = {
           configFilename: 'default-deploy.yml'

@@ -45,6 +45,7 @@ class kernel {
     global.readYaml = this.readYaml
     global.$helper = helper
     global.execOnServer = this.execOnServer
+    global.getLastPathItem = this.getLastPathItem
   }
 
   initChalk() {
@@ -268,6 +269,12 @@ class kernel {
 
     const prefix = `ssh -o StrictHostKeyChecking=no ${server.user}@${server.host}`
     await execAsync(`${prefix} "${command}"`, options)
+  }
+
+  getLastPathItem(path) {
+    if(typeof path != 'string') return ''
+    const parts = path.split('/').filter(part => part)
+    return parts[parts.length-1]
   }
 }
 

@@ -31,9 +31,8 @@ class buildNuxtHandler extends _baseBuildHandler {
     }
 
     await this._setupNuxtPm2Config()
-    // await this._yarnInstall()
     await this._setupEnvFile()
-    // await this._clientSideBuild() // target static專用
+    await this._clientSideBuild()
   }
 
   async _addDeployCommit() {
@@ -73,11 +72,6 @@ class buildNuxtHandler extends _baseBuildHandler {
     await writeFile(nuxtPm2ConfigPath, nuxtPm2Config)
   }
 
-  // async _yarnInstall() {
-  //   if(this.nuxtTarget != 'static') return // nuxt server mode不需要client side先安裝
-  //   await execAsync(`yarn install`, { cwd: DEPLOY_ENV.SOURCE_PATH })
-  // }
-
   async _setupEnvFile() {
     const frontendEnv = DEPLOY_ENV.CONFIG.build.env
     if(typeof frontendEnv != 'object') return
@@ -90,16 +84,25 @@ class buildNuxtHandler extends _baseBuildHandler {
     })
   }
 
-  // async _clientSideBuild() {
-  //   if(this.nuxtTarget != 'static') return
-  //   const clientBuildScript = !DEPLOY_ENV.CONFIG.build.clientBuildScript
-  //     ? 'yarn generate'
-  //     : DEPLOY_ENV.CONFIG.build.clientBuildScript
-  //
-  //   await execAsync(clientBuildScript, {
-  //     cwd: DEPLOY_ENV.SOURCE_PATH,
-  //   })
-  // }
+  async _clientSideBuild() {
+    if(!this.nuxtConfig.buildAtClient) return
+
+    await execAsync(`yarn install`, {
+      cwd: DEPLOY_ENV.SOURCE_PATH,
+    })
+
+    if(this.nuxtTarget == 'server') {
+      await execAsync(`yarn build`, {
+        cwd: DEPLOY_ENV.SOURCE_PATH,
+      })
+    }
+
+    else {
+      await execAsync(`yarn generate`, {
+        cwd: DEPLOY_ENV.SOURCE_PATH,
+      })
+    }
+  }
 
   async _removeNodeModules() {
     await execAsync(`rm -rf node_modules`, {
