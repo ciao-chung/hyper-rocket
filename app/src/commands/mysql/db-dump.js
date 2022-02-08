@@ -3,6 +3,9 @@ const cli = require('cli-ux')
 const { env } = require('shelljs')
 const { resolve } = require('path')
 const { readdirSync, writeFileSync } = require('fs')
+const lineNotifyService = require('@services/lineNotifyService.js')
+const slackWebHookService = require('@services/slackWebHookService.js')
+const mailService = require('@services/mailService.js')
 class dbDump extends Command {
   async run() {
     const {args, flags} = this.parse(dbDump)
@@ -29,6 +32,7 @@ class dbDump extends Command {
     await this.outputLog()
     await this.backupToS3()
     await this.backupToGit()
+    await this.ci()
   }
 
   initLog() {
@@ -134,6 +138,45 @@ class dbDump extends Command {
       ignoreError: true,
     })
   }
+
+  async ci() {
+    if(this.flags['ci-line']) {
+      lineNotifyService.init()
+      lineNotifyService.send(`🚀 HYPER ROCKET資料庫備份完成通知\n${this.backupLog}`)
+    }
+
+    if(this.flags['ci-slack']) {
+      slackWebHookService.init()
+      slackWebHookService.send({
+        text: `🚀 HYPER ROCKET測試通知`,
+        blocks: [
+          {
+            type: 'section',
+            text: {
+              type: 'mrkdwn',
+              text: `*🚀 HYPER ROCKET資料庫備份完成通知*`,
+            },
+          },
+          {
+            type: 'section',
+            text: {
+              type: 'mrkdwn',
+              text: `${this.backupLog}`,
+            },
+          },
+        ],
+      })
+    }
+
+    if(this.flags['ci-email']) {
+      mailService.init()
+      mailService.send({
+        subject: `🚀 HYPER ROCKET資料庫備份完成通知 ${now()}`,
+        targets: this.flags['ci-email'],
+        text: `${this.backupLog}`,
+      })
+    }
+  }
 }
 
 dbDump.description = `
@@ -182,6 +225,17 @@ dbDump.flags = {
   git: flags.string({
     description: `Git Repository(GIT備份機制)
 此選項將使用${chalk.hex(COLOR.ORANGE_HEX)('git')}來做備份`,
+  }),
+  'ci-line': flags.boolean({
+    description: `備份完成後發通知${chalk.hex(COLOR.ORANGE_HEX)('line-notify')}`,
+  }),
+  'ci-email': flags.string({
+    multiple: true,
+    description: `備份完成後發通知${chalk.hex(COLOR.ORANGE_HEX)('Email')}
+此參數請設定要發送的Email(可發多個)`,
+  }),
+  'ci-slack': flags.boolean({
+    description: `備份完成後發通知${chalk.hex(COLOR.ORANGE_HEX)('Slack')}`,
   }),
 }
 

@@ -11,7 +11,9 @@
 
 - removeRemoteBeforeRsync: Boolean, rsync之前刪除遠端目錄
 
-## deploy
+## deploy(Single Server)
+
+> 若不使用SSL, 可不使用`ssl`及`email`參數
 
 ```bash
 hyper-rocket nginx:site \
@@ -21,4 +23,18 @@ hyper-rocket nginx:site \
     --path /home/site/project/[project-name]/frontend \
     --domain [domain] \
     --email [email]
+```
+
+## deploy(Multi Server)
+
+> 若為Load Balancer架構可使用此方式佈署
+
+port為`內部使用的port`
+
+```bash
+hyper-rocket nginx:site \
+    --spa \     
+    --filename [domain].conf \
+    --path /home/site/project/[project-name]/frontend \
+    --port 9000
 ```
