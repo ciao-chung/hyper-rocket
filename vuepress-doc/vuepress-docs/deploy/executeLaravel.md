@@ -60,7 +60,7 @@ hyper-rocket nginx:site \
 port為`內部使用的port`
 
 ```bash
-hyper-rocket nginx:site \
+hyper-rocket nginx:localhost \
     --filename [domain].conf \
     --path /home/site/project/[project-name]/backend/public \
     --domain [domain] \

@@ -20,10 +20,39 @@
 
 - removeRemoteBeforeRsync: Boolean, rsync之前刪除遠端目錄
 
-## deploy
+## deploy(Single Server)
+
+> 若不使用SSL, 可不使用`ssl`及`email`參數
+
+**參數**
+
+- port(required): String, 內部Proxy Port
+- proxyPort: String, 要轉接的外部Port(預設為80)
+- domain(required): String, 網域, 如果是本機請使用localhost
+- ssl: Boolean, 使用SSL
+- email: String, Let's encrypt email
+- filename(required): String, 存在/etc/nginx/sites-available/中的檔名, 例如: site.conf
 
 ```bash
-hyper-rocket nginx:site \
+hyper-rocket nginx:nuxt \
+    --ssl \     
+    --spa \     
+    --filename [domain].conf \
+    --path /home/site/project/[project-name]/frontend \
+    --domain [domain] \
+    --email [email]
+```
+
+## deploy(Multi Server)
+
+基本上同`Single Server`佈署方式
+
+只要將`host`改為`localhost`
+
+並不要使用`ssl`及`email`選項即可
+
+```bash
+hyper-rocket nginx:nuxt \
     --ssl \     
     --spa \     
     --filename [domain].conf \
