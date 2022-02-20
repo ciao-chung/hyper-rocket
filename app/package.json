@@ -1,7 +1,7 @@
 {
   "name": "hyper-rocket",
   "description": "Hyper CLI",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "author": "Ciao Chung @ciao-chung",
   "bin": {
     "hyper-rocket": "./bin/run"
