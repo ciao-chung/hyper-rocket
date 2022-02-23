@@ -1,7 +1,7 @@
 {
   "name": "hyper-rocket",
   "description": "Hyper CLI",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "author": "Ciao Chung @ciao-chung",
   "bin": {
     "hyper-rocket": "./bin/run"
@@ -59,6 +59,9 @@
     "topics": {
       "ci": {
         "description": "CI(Continue Integration)設定"
+      },
+      "shell": {
+        "description": "Shell設定"
       },
       "deploy": {
         "description": "佈署"

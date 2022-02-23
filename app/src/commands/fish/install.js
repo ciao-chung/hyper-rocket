@@ -6,7 +6,7 @@ class fishInstall extends Command {
     const {flags} = this.parse(fishInstall)
     global.removeSudo = flags.removeSudo
     this.commandFlags = flags
-    await fish.install(flags.version)
+    await fish.install(flags.defaultShell)
     await fish.setupTheme(flags.theme)
   }
 }
@@ -25,12 +25,11 @@ fishInstall.flags = {
     options: ['gitstatus', 'bobthefish'],
     default: 'gitstatus',
   }),
-  version: flags.string({
-    name: 'version',
-    char: 'v',
-    description: `Fish Shell版本`,
-    options: ['2', '3'],
-    default: '2',
+  defaultShell: flags.boolean({
+    name: 'defaultShell',
+    char: 'd',
+    description: `將Fish Shell設定為預設Shell, 預設為false`,
+    default: false,
   }),
   removeSudo: global.removeSudoFlag(flags),
 }

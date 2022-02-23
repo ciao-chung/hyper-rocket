@@ -5,18 +5,20 @@ class fish {
   constructor() {
     this.pwd = process.env.PWD
   }
-  async install(version) {
+  async install(defaultShell) {
 
     await execAsync(`sudo apt-get update`)
     await execAsync(`sudo apt-get install git -y`)
     try {
-      await execAsync(`sudo apt-add-repository ppa:fish-shell/release-${version} -y`)
+      await execAsync(`sudo apt-add-repository ppa:fish-shell/release-3 -y`)
     } catch {
-      await execAsync(`sudo apt-add-repository ppa:fish-shell/release-${version} -r -y`)
+      await execAsync(`sudo apt-add-repository ppa:fish-shell/release-3 -r -y`)
     }
     await execAsync(`sudo apt-get update`)
     await execAsync(`sudo apt-get install fish -y`)
-    await execAsync(`sudo usermod -s /usr/bin/fish ${os.userInfo().username}`)
+    if(defaultShell === true) {
+      await execAsync(`sudo usermod -s /usr/bin/fish ${os.userInfo().username}`)
+    }
     await execAsync(`curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install > install`, { cwd: this.pwd })
     await execAsync(`fish install --path=~/.local/share/omf --config=~/.config/omf --noninteractive`, { cwd: this.pwd })
     await execAsync(`rm install`, { cwd: this.pwd })
