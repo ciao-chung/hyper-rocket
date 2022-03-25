@@ -14,7 +14,11 @@ class fish {
     } catch {
       await execAsync(`sudo apt-add-repository ppa:fish-shell/release-3 -r -y`)
     }
-    await execAsync(`sudo apt-get update`)
+    try {
+      await execAsync(`sudo apt-get update`)
+    } catch {
+      await execAsync(`sudo apt-add-repository ppa:fish-shell/release-3 -r -y`)
+    }
     await execAsync(`sudo apt-get install fish -y`)
     if(defaultShell === true) {
       await execAsync(`sudo usermod -s /usr/bin/fish ${os.userInfo().username}`)
