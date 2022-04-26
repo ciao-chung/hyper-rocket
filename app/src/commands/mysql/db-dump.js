@@ -6,6 +6,7 @@ const { readdirSync, writeFileSync } = require('fs')
 const lineNotifyService = require('@services/lineNotifyService.js')
 const slackWebHookService = require('@services/slackWebHookService.js')
 const mailService = require('@services/mailService.js')
+const moment = require("moment");
 class dbDump extends Command {
   async run() {
     const {args, flags} = this.parse(dbDump)
@@ -22,7 +23,7 @@ class dbDump extends Command {
     }
     this.maxFileQuantity = flags.max
 
-    this.subFolderName = now('YYYYMMDD_HHmmss')
+    this.subFolderName = `hyper-rocket-dump-${now('YYYYMMDD_HHmmss')}`
     this.folderPath = resolve(this.outputPath, this.subFolderName)
 
     this.initLog()
@@ -82,18 +83,23 @@ class dbDump extends Command {
   // 移除較久的檔案
   async removeOverLimitFiles() {
     const files = readdirSync(this.outputPath)
-      .filter(file => file != '.git')
+      .filter(file => {
+        if(file == '.git') return false
+        if(new RegExp(/hyper-rocket-dump/g).test(file) == false) return false
+        return true
+      })
       .reverse()
     logger(`正在移除過久的備份(保留最新${this.maxFileQuantity}次備份)`)
 
     // 沒超過檔案限制
     if(files.length < this.maxFileQuantity) return
-
     this.addLog(`## 開始移除過久的備份`)
     for(const index in files) {
       const file = files[index]
       const fileIndex = parseInt(index)+1
       if(fileIndex <= this.maxFileQuantity) continue
+      const isDateFolderName = new RegExp(/hyper-rocket-dump/g).test(file) // 僅刪除日期目錄, 避免誤刪其他檔案
+      if(!isDateFolderName) continue
       const folderFullPath = resolve(this.outputPath, file)
       logger(`正在刪除過期備份: ${file}`, 'yellow')
       this.addLog(`## 開始移除過久的備份`)
@@ -195,7 +201,10 @@ dbDump.flags = {
   output: flags.string({
     char: 'o',
     required: true,
-    description: `輸出路徑`,
+    description: `輸出路徑
+${chalk.hex(COLOR.RED_HEX)('請注意這個輸入路徑將會清除過多的備份')}
+${chalk.hex(COLOR.RED_HEX)('此目錄路徑請使用請獨立建立一個目錄')}
+${chalk.hex(COLOR.RED_HEX)('避免資料被誤刪')}`,
   }),
   username: flags.string({
     char: 'u',
