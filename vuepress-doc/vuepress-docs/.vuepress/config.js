@@ -14,6 +14,7 @@ module.exports = {
         title: '佈署',
         children: [
           '/deploy/execute',
+          '/deploy/executeCommand',
           '/deploy/executeEnv',
           '/deploy/executeVue',
           '/deploy/executeNuxt',
