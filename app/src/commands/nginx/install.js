@@ -81,7 +81,7 @@ install.flags = {
   }),
   phpfpm: flags.string({
     description: '設定php-fpm指定版本',
-    options: ['7.1', '7.2', '7.3', '7.4'],
+    options: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1'],
   }),
   removeSudo: global.removeSudoFlag(flags),
 }
