@@ -23,7 +23,8 @@
     "nodemailer": "^6.4.17",
     "prettyjson": "^1.2.1",
     "qs": "^6.9.4",
-    "shelljs": "^0.8.4"
+    "shelljs": "^0.8.4",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
