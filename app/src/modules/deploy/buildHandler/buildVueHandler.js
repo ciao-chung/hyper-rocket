@@ -42,7 +42,10 @@ class buildVueHandler extends _baseBuildHandler {
   }
 
   async _yarnInstall() {
-    await execAsync(`yarn install`, { cwd: DEPLOY_ENV.SOURCE_PATH })
+    const installScript = !DEPLOY_ENV.CONFIG.build.installScript
+      ? 'yarn build'
+      : DEPLOY_ENV.CONFIG.build.installScript
+    await execAsync(installScript, { cwd: DEPLOY_ENV.SOURCE_PATH })
   }
 
   async _setupApiBase() {
