@@ -54,6 +54,11 @@ class publishLaravelHandler extends _basePublishHandler{
       ignoreError: true,
       remoteCwd: this.remoteLaravelPath,
     })
+
+    await execOnServer(server, `php artisan cache:clear`, {
+      ignoreError: true,
+      remoteCwd: this.remoteLaravelPath,
+    })
   }
 
   async _migrate(server) {
