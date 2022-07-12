@@ -45,12 +45,12 @@ class publishLaravelHandler extends _basePublishHandler{
       remoteCwd: this.remoteLaravelPath,
     })
 
-    await execOnServer(server, `php artisan cache:clear`, {
+    await execOnServer(server, `php artisan config:clear`, {
       ignoreError: true,
       remoteCwd: this.remoteLaravelPath,
     })
 
-    await execOnServer(server, `php artisan optimize`, {
+    await execOnServer(server, `php artisan cache:clear`, {
       ignoreError: true,
       remoteCwd: this.remoteLaravelPath,
     })
