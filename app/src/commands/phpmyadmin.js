@@ -56,7 +56,10 @@ phpmyadmin.flags = {
   password: flags.string({
     char: 'p',
     description: `MySQL root密碼
-使用此參數將不會出現互動式密碼問答`,
+使用此參數將不會出現互動式密碼問答
+php 7.4以上需要手動更新phpmyadmin至5.x版本
+參考連結: https://devanswers.co/manually-upgrade-phpmyadmin/
+`,
   }),
   phpIni: flags.string({
     char: 'i',

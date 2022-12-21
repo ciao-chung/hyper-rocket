@@ -122,6 +122,7 @@ alias ...="cd ../../"
 alias ....="cd ../../../"
 alias .....="cd ../../../../"
 alias phpu="./vendor/bin/phpunit"
+alias sail="./vendor/bin/sail"
 alias sf="app/console"
 alias sshsample="ssh -o StrictHostKeyChecking=no username@host.com"
 set -g fish_prompt_pwd_dir_length 0
