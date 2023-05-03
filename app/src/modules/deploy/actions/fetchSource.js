@@ -108,7 +108,7 @@ class fetchSource extends _deployAction {
   }
 
   async _fetchByPath() {
-    const sourceFrom = DEPLOY_ENV.CONFIG.source.path
+    const sourceFrom = DEPLOY_ENV.CONFIG.source.sourceCodePath
     const exist = existsSync(sourceFrom)
     if(!exist) {
       logger(`Fetch source目錄不存在: ${sourceFrom}`, 'red')

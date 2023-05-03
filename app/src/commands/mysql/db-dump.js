@@ -13,6 +13,7 @@ class dbDump extends Command {
     this.flags = flags
     this.username = flags.username
     this.password = flags.password
+    this.host = flags.host
     this.outputPath = flags.output
     this.db = flags.db
     this.password = flags.password
@@ -66,7 +67,7 @@ class dbDump extends Command {
   async dumpDatabaseItem(dbName) {
     const filePath = `${this.subFolderName}/${dbName}.sql`
     try {
-      await execAsync(`mysqldump -u ${this.username} -p${this.password} ${dbName} > ${filePath}`, {
+      await execAsync(`mysqldump -u ${this.username} -h ${this.host} -p${this.password} ${dbName} > ${filePath}`, {
         cwd: this.outputPath,
       })
       logger(`${dbName}匯出完成`, 'yellow')
@@ -205,6 +206,11 @@ dbDump.flags = {
 ${chalk.hex(COLOR.RED_HEX)('請注意這個輸入路徑將會清除過多的備份')}
 ${chalk.hex(COLOR.RED_HEX)('此目錄路徑請使用請獨立建立一個目錄')}
 ${chalk.hex(COLOR.RED_HEX)('避免資料被誤刪')}`,
+  }),
+  host: flags.string({
+    char: 'h',
+    default: 'localhost',
+    description: `MySQL Host`,
   }),
   username: flags.string({
     char: 'u',
