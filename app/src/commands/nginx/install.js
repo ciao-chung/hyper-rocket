@@ -34,9 +34,17 @@ class install extends Command {
       ignoreError: true,
     })
     if(this.commandFlags.certbot) {
-      await execAsync(`sudo add-apt-repository ppa:certbot/certbot -y`)
+      try {
+        await execAsync(`sudo add-apt-repository ppa:certbot/certbot -y`)
+      } catch (error) {
+        await execAsync(`sudo add-apt-repository ppa:certbot/certbot -r -y`)
+      }
       await execAsync(`sudo apt-get update -y`)
-      await execAsync(`sudo apt-get install python-certbot-nginx -y`)
+      try {
+        await execAsync(`sudo apt-get install python-certbot-nginx -y`)
+      } catch (error) {
+        await execAsync(`sudo apt-get install python3-certbot-nginx -y`)
+      }
     }
 
     try {
