@@ -66,8 +66,15 @@ class dbDump extends Command {
 
   async dumpDatabaseItem(dbName) {
     const filePath = `${this.subFolderName}/${dbName}.sql`
+    const sslCa = this.flags['ssl-ca']
+    const sslCert = this.flags['ssl-cert']
+    const sslKey = this.flags['ssl-key']
+    const sslCaOptions = sslCa ? `--ssl-ca ${sslCa}` : ''
+    const sslCertOptions = sslCert ? `--ssl-cert ${sslCert}` : ''
+    const sslKeyOptions = sslKey ? `--ssl-key ${sslKey}` : ''
+    const sslOptions = `${sslCaOptions} ${sslCertOptions} ${sslKeyOptions}`
     try {
-      await execAsync(`mysqldump -u ${this.username} -h ${this.host} -p${this.password} ${dbName} > ${filePath}`, {
+      await execAsync(`mysqldump -u ${this.username} -h ${this.host} -p${this.password} ${sslOptions} ${dbName} > ${filePath}`, {
         cwd: this.outputPath,
       })
       logger(`${dbName}匯出完成`, 'yellow')
@@ -251,6 +258,15 @@ ${chalk.hex(COLOR.RED_HEX)('避免資料被誤刪')}`,
   }),
   'ci-slack': flags.boolean({
     description: `備份完成後發通知${chalk.hex(COLOR.ORANGE_HEX)('Slack')}`,
+  }),
+  'ssl-ca': flags.string({
+    description: `MySQL SSL CA檔案路徑`,
+  }),
+  'ssl-cert': flags.string({
+    description: `MySQL SSL CERT檔案路徑`,
+  }),
+  'ssl-key': flags.string({
+    description: `MySQL SSL KEY檔案路徑`,
   }),
 }
 

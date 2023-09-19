@@ -5,10 +5,17 @@ class install extends Command {
     const {flags} = this.parse(install)
     global.removeSudo = flags.removeSudo
     await execAsync(`sudo apt-get update`)
-    await execAsync(`sudo apt-get install software-properties-common -y`)
-    await execAsync(`sudo add-apt-repository ppa:certbot/certbot -y`)
+    try {
+      await execAsync(`sudo add-apt-repository ppa:certbot/certbot -y`)
+    } catch (error) {
+      await execAsync(`sudo add-apt-repository ppa:certbot/certbot -r -y`)
+    }
     await execAsync(`sudo apt-get update`)
-    await execAsync(`sudo apt-get install python-certbot-nginx -y`)
+    try {
+      await execAsync(`sudo apt-get install python-certbot-nginx -y`)
+    } catch (error) {
+      await execAsync(`sudo apt-get install python3-certbot-nginx -y`)
+    }
     await execAsync(`sudo systemctl status certbot.timer`)
   }
 }
