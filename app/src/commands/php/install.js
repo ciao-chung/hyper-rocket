@@ -37,18 +37,63 @@ class PhpInstallCommand extends Command {
     this.log(`開始安裝php`)
     await execAsync(`sudo apt-get install php${this.version} -y`)
     await execAsync(`php --version`)
-    await execAsync(`sudo apt-get install php${this.version}-mysql -y`)
-    await execAsync(`sudo apt-get install php${this.version}-mbstring -y`)
+    await execAsync(`sudo apt-get install php${this.version}-mysql -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-mbstring -y`, {
+      ignoreError: true
+    })
     await execAsync(`sudo apt-get install php${this.version}-mcrypt -y`, {
       ignoreError: true,
     })
-    await execAsync(`sudo apt-get install php${this.version}-gd -y`)
-    await execAsync(`sudo apt-get install php${this.version}-zip -y`)
-    await execAsync(`sudo apt-get install php${this.version}-dom -y`)
-    await execAsync(`sudo apt-get install php${this.version}-xml -y`)
-    await execAsync(`sudo apt-get install php${this.version}-curl -y`)
-    await execAsync(`sudo apt-get install php${this.version}-bcmath -y`)
-    await execAsync(`sudo apt-get install php${this.version}-xdebug -y`)
+    await execAsync(`sudo apt-get install php${this.version}-gd -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-zip -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-dom -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-xml -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-curl -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-bcmath -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-xdebug -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-cli -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-dev -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-intl -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-readline -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-msgpack -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-igbinary -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-swoole -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-ldap -y`, {
+      ignoreError: true
+    })
+    await execAsync(`sudo apt-get install php${this.version}-pcov -y`, {
+      ignoreError: true
+    })
   }
 
   async _installComposer() {
@@ -104,7 +149,10 @@ PhpInstallCommand.args = [
     name: 'version',
     required: true,
     description: 'php版本',
-    options: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2'],
+    options: [
+      '7.1', '7.2', '7.3', '7.4',
+      '8.0', '8.1', '8.2', '8.3',
+    ],
   }
 ]
 
