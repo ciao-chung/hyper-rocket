@@ -36,6 +36,9 @@ class PhpInstallCommand extends Command {
   async _installPhp() {
     this.log(`開始安裝php`)
     await execAsync(`sudo apt-get install php${this.version} -y`)
+    await execAsync(`sudo update-alternatives --set php /usr/bin/php${this.version}`, {
+      ignoreError: true
+    })
     await execAsync(`php --version`)
     await execAsync(`sudo apt-get install php${this.version}-mysql -y`, {
       ignoreError: true
@@ -131,9 +134,11 @@ class PhpInstallCommand extends Command {
     await execAsync(`sudo service apache2 stop`, {
       ignoreError: true,
     })
+    await execAsync(`sudo cp -r /etc/apache2 /etc/apache2-origin-bak`, {
+      ignoreError: true,
+    })
     await execAsync(`sudo apt-get remove --purge apache2 apache2-utils -y`)
     await execAsync(`sudo rm -rf /etc/apache2-origin-bak`)
-    await execAsync(`sudo cp -r /etc/apache2 /etc/apache2-origin-bak`)
     await execAsync(`sudo rm -rf /etc/apache2`)
     await execAsync(`sudo service apache2 status`, {
       ignoreError: true,
